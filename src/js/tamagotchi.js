@@ -11,8 +11,16 @@ export let tamagotchi = {
     gem: 0,
     age: 0,
     weight: 1.0,
+    isBaby: true,
+    isChild: false,
+    isTeen: false,
+    isAdult: false,
+    isGeezer: false,
+    canLevelUp: false,
+    name: 'blank',
 
     decreaseValues: function() {
+        $("#lifeStage").text(`${this.name} is a baby!`);
         const decreaseInterval = setInterval(() => {
             const elemOne = document.getElementById("foodBar");
             const elemTwo = document.getElementById("happyBar");
@@ -53,6 +61,41 @@ export let tamagotchi = {
                     clearInterval(decreaseInterval);
                     return "Your tamagotchi died.";
                 }
+            }
+            if (this.age === 100 || this.age === 200 || this.age === 400) {
+                this.canLevelUp = true;
+            }
+
+            if (this.age <= 200 && this.age >= 100 && this.isBaby === true && this.canLevelUp === true) {
+                this.foodLimit += .25;
+                this.isBaby = false;
+                this.isChild = true;
+                this.canLevelUp = false;
+                $("#lifeStage").text(`${this.name} is a child!`);
+
+            }
+            else if (this.age <= 400 && this.age >= 200 && this.isChild === true && this.canLevelUp === true) {
+                this.foodLimit += .50;
+                this.isChild = false;
+                this.isTeen = true;
+                this.canLevelUp = false;
+                $("#lifeStage").text(`${this.name}  is a teenager!`);
+
+            }
+            else if (this.age <= 700 && this.age >= 400 && this.isTeen === true && this.canLevelUp === true) {
+                this.foodLimit += .75;
+                this.isTeen = false;
+                this.isAdult = true;
+                this.canLevelUp = false;
+                $("#lifeStage").text(`${this.name}  is an adult!`);
+
+            }
+            else if (this.age >= 701 && this.isAdult === true && this.canLevelUp === true) {
+                this.foodLimit += 1.0;
+                this.isAdult = false;
+                this.isGeezer = true;
+                this.canLevelUp = false;
+                $("#lifeStage").text(`${this.name}  is an old geezer!`);
             }
         }, 500);
     },
@@ -97,6 +140,10 @@ export let tamagotchi = {
         return `Happy Limit goes down to ${this.happyLimit}!`;
         
     },
+
+    setName: function(inputName) {
+        this.name = inputName;
+    }
 
 
 }
