@@ -9,6 +9,9 @@ import { tamagotchi } from './js/tamagotchi';
 $(document).ready(function () {
     $("#userForm").submit(function(event) {
         event.preventDefault();
+        tamagotchi.setName($("#userInput").val());
+        const birthday = new Date();
+        $("#textLog").prepend(`${tamagotchi.name} has been born at ${birthday.getMonth() + 1}/${birthday.getDay()}/${birthday.getFullYear()}! \n`);
         alert(`Keep the Values of Food and Happiness above zero by clicking Feed me! and Play.
         Exhaustion automatically decreases over time.
         Take a pill - 5 gem cost - Decreases the rate at which Food Decreases
@@ -17,12 +20,13 @@ $(document).ready(function () {
         $("#intro").hide();
         $("#userForm").hide();
         $("#tamagotchiImg").attr('src', "https://vignette.wikia.nocookie.net/tamagotchi/images/d/d3/Mametchi_blue.PNG/revision/latest?cb=20111002004702");
-        tamagotchi.setName($("#userInput").val());
+        
         tamagotchi.decreaseValues(name);
 
         $("#feedForm").submit(function(event) {
             event.preventDefault();
             tamagotchi.feed(5);
+            
         });
         $("#happyForm").submit(function(event) {
             event.preventDefault();
@@ -45,6 +49,18 @@ $(document).ready(function () {
             }
         });
 
+        $("#healButton").submit(function(event) {
+            event.preventDefault();
+            if(tamagotchi.healthValue <= 75 && tamagotchi.gem >=15) {
+                tamagotchi.healthValue += 25;
+                tamagotchi.gem -= 15;
+                $("#gems").text(`Gems: ${tamagotchi.gem}`);
+                $("#textLog").prepend(`${this.name} has been healed by 25 hp! \n`);
+                const elemThree = document.getElementById("healthBar");
+                elemThree.style.width = this.healthValue + '%';    
+            }
+        });
+
         $("#harvestWeight").submit(function(event) {
             event.preventDefault();
             if(tamagotchi.weight >= 10) {
@@ -59,9 +75,23 @@ $(document).ready(function () {
         $("#25kg").submit(function(event) {
             event.preventDefault();
             if(tamagotchi.weight < 25) {
-                alert(`${tamagotchi.name} is too small for this fight`);
+                $("#textLog").prepend(`${tamagotchi.name} is too small to fight! \n`);
+            }
+            else {
+                tamagotchi.wrestleTwentyFive();
             }
 
+        })
+
+        $("#strengthButton").submit(function(event) {
+            event.preventDefault();
+            if (tamagotchi.gem >= 10) {
+                tamagotchi.gem -= 10;
+                tamagotchi.strength += 1;
+                $("#gems").text(`Gems: ${tamagotchi.gem}`);
+                $("#strength").text(`Strength: ${tamagotchi.strength}`);
+                $("#textLog").prepend(`${tamagotchi.name} gains 1 Strength! \n`);
+            }
         })
     });
 

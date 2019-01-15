@@ -32,10 +32,30 @@
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
 }
 
-.grid-container {
+.gridTwo-container {
     display: grid;
     grid-template-columns: auto auto auto;
     background-color: #2196F3;
     padding: 10px;
-    width: 50%;
+    width: 100%;
+  }
+
+  .gridOne-container {
+    display: inline-grid;
+    grid-template-columns: repeat(5, 1fr);
+    background-color: #2196F3;
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  #textLog{
+    border: solid black 2px;
+    width: 450px;
+    height: 250px;
+  }
+
+  #trophyOne {
+      height: 35px;
+      width: 35px;
   }

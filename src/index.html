@@ -23,46 +23,70 @@
             <div id="exhaustionBar" style="height:24px;width:0">Exhaustion</div>
         </div>
 
-        <div class="grid-container">
+        <div class="gridOne-container">
             <div id="gems">
                 Gems: 0
+            </div>
+            <div id="lifeStage">
+                Life Stage: Baby
             </div>
             <div id="age">
                 Age: 0
             </div>
+            <div id="strength">
+                Strength: 0
+            </div>
             <div id="weight">
                 Weight: 1.0 kg
             </div>
+            
+            
+        </div>
+        <br>
+        <div class="gridTwo-container">
+            <div id="buttons">
+                <form id="feedForm">
+                    <button id="feed" type='submit'>Feed Me!</button>
+                </form>
+                <form id="happyForm">
+                    <button id="happy" type='submit'>Play!</button>
+                </form>
+                <form id="feedPill">
+                    <button id="pill" type='submit'>Take a Pill! (5 gems)</button>
+                </form>
+                <form id="giveGameboy">
+                    <button id="gameboy" type='submit'>Give Gameboy! (10 gems)</button>
+                </form>
+                <form id="harvestWeight">
+                        <button id="weight" type='submit'>Harvest Gems!</button>
+                </form>
+                <form id="healButton">
+                        <button id="heal" type='submit'>Heal for 25 HP (15 gems)</button>
+                </form>
+                <form id="strengthButton">
+                        <button id="strengthBtn" type='submit'>Gain 1 Strength</button>
+                </form>
+            </div>
+            <div class="log">
+                <textarea id="textLog"></textarea>
+            </div>
+            <div id="wrestling">
+                <h2>Wrestling Weight Classes</h2>
+                <form id="25kg">
+                    <button type='submit'>25kg</button>
+                    <div id="trophyOneDiv"></div>
+                </form>
+                <form id="35kg">
+                        <button type='submit'>35kg</button>
+                </form>
+                
+
+            </div>
         </div>
 
-        <form id="feedForm">
-            <button id="feed" type='submit'>Feed Me!</button>
-        </form>
-        <form id="happyForm">
-            <button id="happy" type='submit'>Play!</button>
-        </form>
-        <form id="feedPill">
-            <button id="pill" type='submit'>Take a Pill!</button>
-        </form>
-        <form id="giveGameboy">
-            <button id="gameboy" type='submit'>Give Gameboy!</button>
-        </form>
-        <form id="harvestWeight">
-                <button id="weight" type='submit'>Harvest Gems!</button>
-            </form>
         <img src="http://pixelartmaker.com/art/e4254a127209adb.png" id="tamagotchiImg">
 
-        <p id="lifeStage"></p>
-    </div>
-    <hr>
-    <div id="wrestling">
-        <h2>Wrestling Weight Classes</h2>
-        <form id="25kg">
-                <button type='submit'>25kg</button>
-        </form>
-        <form id="35kg">
-                <button type='submit'>35kg</button>
-        </form>
+        <hr>
     </div>
 </body>
 
