@@ -81,6 +81,28 @@ $(document).ready(function () {
                 tamagotchi.wrestleTwentyFive();
             }
 
+        });
+
+        $("#50kg").submit(function(event) {
+            event.preventDefault();
+            if(tamagotchi.weight < 50) {
+                $("#textLog").prepend(`${tamagotchi.name} is too small to fight! \n`);
+            }
+            else {
+                tamagotchi.wrestleFifty();
+            }
+
+        });
+
+        $("#100kg").submit(function(event) {
+            event.preventDefault();
+            if(tamagotchi.weight < 100) {
+                $("#textLog").prepend(`${tamagotchi.name} is too small to fight! \n`);
+            }
+            else {
+                tamagotchi.wrestleOneHundred();
+            }
+
         })
 
         $("#strengthButton").submit(function(event) {

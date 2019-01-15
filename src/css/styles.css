@@ -34,7 +34,7 @@
 
 .gridTwo-container {
     display: grid;
-    grid-template-columns: auto auto auto;
+    grid-template-columns: repeat(3, 1fr);
     background-color: #2196F3;
     padding: 10px;
     width: 100%;
@@ -55,7 +55,28 @@
     height: 250px;
   }
 
-  #trophyOne {
+  #trophyOne, #trophyTwo, #trophyThree{
       height: 35px;
       width: 35px;
+  }
+
+  
+
+  #wrestlingDiv {
+    display: inline-grid;
+    grid-template-rows: repeat(2, 1fr);
+    background-color: teal;
+    height: 105px;
+  }
+
+  #wrestling {
+    display: inline-grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: teal;
+  }
+
+  #trophyDiv {
+    display: inline-grid;
+    grid-template-columns: repeat(3, 1fr);
+    background-color: teal;
   }

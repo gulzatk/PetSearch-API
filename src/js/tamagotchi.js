@@ -19,6 +19,8 @@ export let tamagotchi = {
     isGeezer: false,
     canLevelUp: false,
     hasWon25kg: false,
+    hasWon50kg: false,
+    hasWon100kg: false,
     name: 'blank',
 
     decreaseValues: function() {
@@ -107,7 +109,18 @@ export let tamagotchi = {
                 $("#lifeStage").text("Life Stage: Geezer");
                 $("#textLog").prepend(`${this.name} has become a geezer! \n`);
             }
-        }, 100);
+
+            if (this.hasWon25kg === true && this.hasWon50kg === true && this.hasWon100kg === true) {
+                alert("You have won the game! Congrats!");
+                location.reload();
+            }
+
+            if (this.healthValue <= 0) {
+                alert(`${this.name} has died. You are a terrible parent. Try again.`);
+                location.reload();
+            }
+
+        }, 300);
     },
 
     feed: function(amount) {
@@ -156,7 +169,8 @@ export let tamagotchi = {
     },
 
     wrestleTwentyFive: function() {
-        if (this.hasWon25kg === false) {
+        if (this.hasWon25kg === false && this.gem >= 25) {
+            this.gem -= 25;
             const nameArray = ["Jimmy", "DogMeat", "Harold", "Cindy"];
             let enemyPower = this.calculateWrestlePower(400, 25);
             let userPower = Math.floor(this.calculateWrestlePower(this.age, this.weight));
@@ -183,19 +197,132 @@ export let tamagotchi = {
             }
 
             if (userPower > 0) {
+                alert(`${this.name} has won with ${userPower} health remaining! You won 30 gems, max food and happiness!`);
                 $("#textLog").prepend(`${this.name} has won with ${userPower} health remaining! You won 30 gems, max food and happiness! \n`);
-                this.gem += 30;
+                this.gem += 50;
                 this.happyValue = 100;
+                this.happyLimit *= .8;
+                this.foodLimit *= .8;
                 this.foodValue = 100;
                 this.hasWon25kg = true;
                 $("#trophyOneDiv").html('<img id="trophyOne" src="http://pixelartmaker.com/art/22b22848ea88550.png">');
             }
             else {
+                alert(`${this.name} has lost! Enemy had ${enemyPower} health remaining. Try again with more weight and age!`);
                 $("#textLog").prepend(`${this.name} has lost! Enemy had ${enemyPower} health remaining. Try again with more weight and age! \n`);
             }
         } 
+        else if (this.gem < 25 && this.hasWon25kg === false) {
+            $("#textLog").prepend(`You do not have enough gems for this fight! \n`);
+        }
         else {
             $("#textLog").prepend(`${this.name} has already won the 25kg cup! \n`);
+        }
+
+    },
+
+    wrestleFifty: function() {
+        if (this.hasWon50kg === false && this.gem >= 30 && this.hasWon25kg === true) {
+            this.gem -= 30;
+            const nameArray = ["Jimmy", "DogMeat", "Harold", "Cindy", "Leather Lips", "Baby Face", "Professor Killa", "Grendelwall"];
+            let enemyPower = this.calculateWrestlePower(600, 70);
+            let userPower = Math.floor(this.calculateWrestlePower(this.age, this.weight));
+            const nameArrayMax = nameArray.length;
+            const nameIndex = this.getRandomInt(nameArrayMax);
+            const opponentName = nameArray[nameIndex];
+            alert(`${this.name} - Wrestling Endurance: ${userPower} - Strength: ${this.strength} \n  VS  \n ${opponentName} - Wrestling Endurance: ${enemyPower} - Strength: ${nameIndex}`);
+
+            while (enemyPower > 0 && userPower > 0) {
+                const moveArray = [function(name, damage) {return `${name} growls the opponent for ${damage}. \n`}, function(name, damage) {return `${name} slaps the opponent for ${damage} damage! \n`}, function(name, damage) {return  `${name} ravages the opponent with its teeth for ${damage} damage! \n`}, function(name, damage) {return  `${name} tackles the opponent for ${damage} damage! \n`}, function(name, damage) {return  `${name} karate chops the opponent for ${damage} damage! \n`}, function(name, damage) {return  `${name} body slams the opponent for ${damage} damage! \n`}];
+                const moveArrayMax = moveArray.length;
+                let name = this.name;
+                let index = this.getRandomInt(moveArrayMax);
+                let attackValue = 1 + (index * this.strength);
+                let currentMove = moveArray[index](name, attackValue);
+                $("#textLog").prepend(currentMove);
+                enemyPower -= index;
+                name = opponentName;
+                index = this.getRandomInt(moveArrayMax);
+                attackValue = 5 + (index * nameIndex);
+                currentMove = moveArray[index](name, attackValue);
+                $("#textLog").prepend(currentMove);
+                userPower -= index;
+            }
+
+            if (userPower > 0) {
+                alert(`${this.name} has won with ${userPower} health remaining! You won 75 gems, max food and happiness!`);
+                $("#textLog").prepend(`${this.name} has won with ${userPower} health remaining! You won 75 gems, max food and happiness! \n`);
+                this.gem += 75;
+                this.happyValue = 100;
+                this.foodValue = 100;
+                this.happyLimit *= .8;
+                this.foodLimit *= .8;
+                this.hasWon50kg = true;
+                $("#trophyTwoDiv").html('<img id="trophyTwo" src="http://pixelartmaker.com/art/22b22848ea88550.png">');
+            }
+            else {
+                alert(`${this.name} has lost! Enemy had ${enemyPower} health remaining. Try again with more weight and age!`);
+                $("#textLog").prepend(`${this.name} has lost! Enemy had ${enemyPower} health remaining. Try again with more weight and age! \n`);
+            }
+        } 
+        else if (this.gem < 30 && this.hasWon50kg === false) {
+            $("#textLog").prepend(`You do not have enough gems for this fight! \n`);
+        }
+        else {
+            $("#textLog").prepend(`${this.name} has already won the 50kg cup! \n`);
+        }
+
+    },
+
+    wrestleOneHundred: function() {
+        if (this.hasWon100kg === false && this.gem >= 50 && this.hasWon25kg === true && this.hasWon50kg === true) {
+            this.gem -= 50;
+            const nameArray = ["Jimmy", "DogMeat", "Harold", "Cindy", "Leather Lips", "Baby Face", "Professor Killa", "Grendelwall", "Pikachu", "Father Death", "Obliteration", "Armageddon"];
+            let enemyPower = this.calculateWrestlePower(900, 115);
+            let userPower = Math.floor(this.calculateWrestlePower(this.age, this.weight));
+            const nameArrayMax = nameArray.length;
+            const nameIndex = this.getRandomInt(nameArrayMax);
+            const opponentName = nameArray[nameIndex];
+            alert(`${this.name} - Wrestling Endurance: ${userPower} - Strength: ${this.strength} \n  VS  \n ${opponentName} - Wrestling Endurance: ${enemyPower} - Strength: ${nameIndex}`);
+
+            while (enemyPower > 0 && userPower > 0) {
+                const moveArray = [function(name, damage) {return `${name} growls the opponent for ${damage}. \n`}, function(name, damage) {return `${name} slaps the opponent for ${damage} damage! \n`}, function(name, damage) {return  `${name} ravages the opponent with its teeth for ${damage} damage! \n`}, function(name, damage) {return  `${name} tackles the opponent for ${damage} damage! \n`}, function(name, damage) {return  `${name} karate chops the opponent for ${damage} damage! \n`}, function(name, damage) {return  `${name} body slams the opponent for ${damage} damage! \n`}];
+                const moveArrayMax = moveArray.length;
+                let name = this.name;
+                let index = this.getRandomInt(moveArrayMax);
+                let attackValue = 1 + (index * this.strength);
+                let currentMove = moveArray[index](name, attackValue);
+                $("#textLog").prepend(currentMove);
+                enemyPower -= index;
+                name = opponentName;
+                index = this.getRandomInt(moveArrayMax);
+                attackValue = 10 + (index * nameIndex);
+                currentMove = moveArray[index](name, attackValue);
+                $("#textLog").prepend(currentMove);
+                userPower -= index;
+            }
+
+            if (userPower > 0) {
+                alert(`${this.name} has won with ${userPower} health remaining! You won 150 gems, max food and happiness!`);
+                $("#textLog").prepend(`${this.name} has won with ${userPower} health remaining! You won 150 gems, max food and happiness! \n`);
+                this.gem += 150;
+                this.happyValue = 100;
+                this.foodValue = 100;
+                this.happyLimit *= .8;
+                this.foodLimit *= .8;
+                this.hasWon100kg = true;
+                $("#trophyThreeDiv").html('<img id="trophyThree" src="http://pixelartmaker.com/art/22b22848ea88550.png">');
+            }
+            else {
+                alert(`${this.name} has lost! Enemy had ${enemyPower} health remaining. Try again with more weight and age!`);
+                $("#textLog").prepend(`${this.name} has lost! Enemy had ${enemyPower} health remaining. Try again with more weight and age! \n`);
+            }
+        } 
+        else if (this.gem < 50 && this.hasWon100kg === false) {
+            $("#textLog").prepend(`You do not have enough gems for this fight! \n`);
+        }
+        else {
+            $("#textLog").prepend(`${this.name} has already won the 100kg cup! \n`);
         }
 
     },
