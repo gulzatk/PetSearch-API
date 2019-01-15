@@ -9,6 +9,11 @@ import { tamagotchi } from './js/tamagotchi';
 $(document).ready(function () {
     $("#userForm").submit(function(event) {
         event.preventDefault();
+        alert(`Keep the Values of Food and Happiness above zero by clicking Feed me! and Play.
+        Exhaustion automatically decreases over time.
+        Take a pill - 5 gem cost - Decreases the rate at which Food Decreases
+        Give Gameboy - 10 gem cost - Decreases the rate at which Happiness Decreases
+        Harvest Gems - Useable above 10kg - Gives a 1:1 ratio of weight to gems, 25% of weight at a time.`);
         $("#intro").hide();
         $("#userForm").hide();
         $("#tamagotchiImg").attr('src', "https://vignette.wikia.nocookie.net/tamagotchi/images/d/d3/Mametchi_blue.PNG/revision/latest?cb=20111002004702");
@@ -50,6 +55,14 @@ $(document).ready(function () {
                 $("#weight").text(`Weight: ${tamagotchi.weight.toFixed(2)} kg`);
             }
         });
+
+        $("#25kg").submit(function(event) {
+            event.preventDefault();
+            if(tamagotchi.weight < 25) {
+                alert(`${tamagotchi.name} is too small for this fight`);
+            }
+
+        })
     });
 
     
