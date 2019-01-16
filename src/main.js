@@ -8,8 +8,6 @@ import { Dog } from './js/dog';
 let dogPic = new Dog();
 let promise = dogPic.getBreedList();
 
-
-
 promise.then(function(response) {
     let body = JSON.parse(response);
     let list = body.message;
@@ -45,7 +43,7 @@ $(document).ready(function () {
             let body = JSON.parse(response);
             let img = new Image();
             img.src = body.message;
-            document.getElementById("dogBreedImgOutput").src = img.src;
+            document.getElementById("dogImgOutput").src = img.src;
         })
     });
 });

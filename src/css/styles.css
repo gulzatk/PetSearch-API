@@ -1,8 +1,36 @@
 #dogImgOutput {
-    width: 400px;
+    height: 300px;   
 }
 
-#dogBreedImgOutput {
-    width: 500px;
-   
+#imgDiv {
+    text-align: center;
+}
+
+#mainHeaderDiv {
+    background-color: blanchedalmond;
+    height: 100px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid black;
+}
+
+#mainHeader {
+    font-size: 40px;
+    text-align: center;
+    padding-top: 15px;
+}
+
+.button-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.button-center {
+    display: inline-block;
+    text-align: center;
+}
+
+.mainHR {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 1px solid black;
 }
