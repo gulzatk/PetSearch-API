@@ -46,4 +46,44 @@ $(document).ready(function () {
             document.getElementById("dogImgOutput").src = img.src;
         })
     });
+
+    $("#randomCat").submit(function(event) {
+        event.preventDefault();
+        let catPic = new Dog();
+        let promise = catPic.getRandomCatPic();
+
+        promise.then(function(response) {
+            let body = JSON.parse(response);
+            let img = new Image();
+            img.src = body.file;
+            document.getElementById("dogImgOutput").src = img.src;
+        })
+    });
+
+    $("#randomDogGiphy").submit(function(event) {
+        event.preventDefault();
+        let dogGiphy = new Dog();
+        let promise = dogGiphy.getRandomDogGif();
+
+        promise.then(function(response) {
+            let body = JSON.parse(response);
+            let img = new Image();
+            img.src = body.data.images.original.url;
+            document.getElementById("dogImgOutput").src = img.src;
+        })
+    });
+
+    $("#randomCatGiphy").submit(function(event) {
+        event.preventDefault();
+        let catGiphy = new Dog();
+        let promise = catGiphy.getRandomCatGif();
+
+        promise.then(function(response) {
+            let body = JSON.parse(response);
+            let img = new Image();
+            img.src = body.data.images.original.url;
+            document.getElementById("dogImgOutput").src = img.src;
+        })
+    });
 });
+
